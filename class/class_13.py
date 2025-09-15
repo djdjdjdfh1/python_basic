@@ -32,6 +32,17 @@ class Product:
     def stock(self, value):
         self._stock = value
 
+    def __str__(self):
+        return f'상품명: {self._name}, 가격: {self._price}, 재고: {self._stock}'
+
 p1 = Product('삼다수', 500, 20)
 p1.name = '제주삼다수'
 print(p1.name)
+products = [
+    Product('삼다수', 500, 20),
+    Product('칸타타', 1500, 50),
+    Product('비락식혜', 1200, 30)
+]
+# 가격 20% 인하
+# 가격 10% 인상
+# 제품 출력
