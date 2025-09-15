@@ -27,3 +27,5 @@ print(a._name)
 print(a.age)
 a.name = '김철수'
 a.age = 30
+
+# del a.age 함수 호출로 에러 발생
