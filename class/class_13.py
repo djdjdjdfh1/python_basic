@@ -44,5 +44,10 @@ products = [
     Product('비락식혜', 1200, 30)
 ]
 # 가격 20% 인하
+products[0].price *= 0.8
+print(products[0].price)
 # 가격 10% 인상
+products[1].price *= 1.1
+print(products[1].price)
 # 제품 출력
+print(products[2])
