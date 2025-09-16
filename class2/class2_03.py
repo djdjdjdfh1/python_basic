@@ -64,4 +64,7 @@ for i in emp:
     elif isinstance(i, Intern):
         i.it()
     else:
-        print('오류입니다')
+        i.emp()
+
+for e in emp:
+    e.__str__() # emp 리스트의 각각의 객체에 해당하는 메소드를 호출, 다형성
