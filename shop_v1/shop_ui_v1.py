@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
-import shopv1
+import shopdbmng
 
 st.set_page_config(layout="wide")
 
 # 초기 회원 데이터
 if "members" not in st.session_state:
-    datas = shopv1.readAll_customers()
+    datas = shopdbmng.readAll_customers()
     st.session_state.members = pd.DataFrame(datas)
 
 # 현재 선택된 회원
@@ -32,14 +32,18 @@ with right_col:
 
     if st.session_state.get("show_list", False):
         # 회원 리스트 테이블
-        for i, row in st.session_state.members.iterrows():
-            col1, col2  = st.columns([2, 2])
-            with col1:                
-                if st.button(str(row["회원아이디"]), key=f"id_{i}"):
-                    st.session_state.selected_member_index = i
-            with col2:
-                if st.button(row["회원이름"], key=f"name_{i}"):
-                    st.session_state.selected_member_index = i
+        st.table(st.session_state.members)
+        
+        # 회원 선택을 위한 셀렉트박스
+        selected_member = st.selectbox(
+            "회원 선택",
+            options=range(len(st.session_state.members)),
+            format_func=lambda x: f"{st.session_state.members.iloc[x]['회원아이디']} - {st.session_state.members.iloc[x]['회원이름']}",
+            key="member_selector"
+        )
+        
+        if selected_member is not None:
+            st.session_state.selected_member_index = selected_member
 
         st.divider()
 
@@ -60,12 +64,12 @@ with right_col:
                     st.session_state.members.at[st.session_state.selected_member_index, "회원아이디"] = member_id
                     st.session_state.members.at[st.session_state.selected_member_index, "회원이름"] = member_name
                     print('****',member_id,member_name,type(member_id), type(member_name))
-                    shopv1.update_customer(member_id,member_name)
+                    shopdbmng.update_customer(member_id,member_name)
                     st.rerun()
                 else:
                     st.session_state.members.loc[len(st.session_state.members)] = {"회원아이디": member_id, "회원이름": member_name}
                     # 데이터 추가 로직
-                    shopv1.create_customer(member_name)
+                    shopdbmng.create_customer(member_name)
                     del st.session_state.members
                     st.rerun()
         with col_b:
