@@ -28,6 +28,7 @@ def create_customer(name):
     cur.execute(sql, name)
     conn.commit()
     print('고객 추가완료')
+# create_customer('강감찬')
 
 def read_all_cusomers(is_dict = False):
     sql = 'select * from customer'
@@ -42,7 +43,30 @@ def read_all_cusomers(is_dict = False):
         for c in cur.fetchall():
             print(f'{c[0]} {c[1]}')
     print('조회 완료')
-read_all_cusomers()
+# read_all_cusomers()
+
+def update_customer(customer_id, name):
+    sql = '''
+        update customer
+            set name = %s 
+        where customer_id = %s    
+    '''
+
+    with conn.cursor() as cur:
+        cur.execute(sql, (name, customer_id))
+    conn.commit()
+# update_customer(1, '이순신')
+
+def delete_customer(customer_id):
+    sql = 'delete from customer where customer_id=%s'
+
+    with conn.cursor() as cur:
+        cur.execute(sql, customer_id)
+    conn.commit()
+    print(f'삭제되었습니다. {customer_id}')
+
+# delete_customer(1)
+
 # 3. 메소드
     # 회원가입
     # 상품정보 출력
