@@ -14,4 +14,39 @@ conn = pymysql.connect(
     database = os.getenv('DB_NAME')
 )
 print('접속성공')
+
+# 2. 각 테이블별
+    # C - insert
+    # R - select
+    # U - update
+    # D - delete
+
+# 고객 - customer
+def create_customer(name):
+    sql = 'insert into customer values(null, %s)'
+    cur = conn.cursor()
+    cur.execute(sql, name)
+    conn.commit()
+    print('고객 추가완료')
+
+def read_all_cusomers(is_dict = False):
+    sql = 'select * from customer'
+    if is_dict:
+        cur = conn.cursor(pymysql.cursors.DictCursor)
+        cur.execute(sql)
+        for c in cur.fetchall():
+            print(f'{c['customer_id']} {c['name']}')
+    else:
+        cur = conn.cursor()
+        cur.execute(sql)
+        for c in cur.fetchall():
+            print(f'{c[0]} {c[1]}')
+    print('조회 완료')
+read_all_cusomers()
+# 3. 메소드
+    # 회원가입
+    # 상품정보 출력
+    # 상품구입
+    # 상품정보 입력
+
 conn.close() # 접속해제
