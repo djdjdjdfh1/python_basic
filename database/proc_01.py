@@ -10,17 +10,17 @@ import os
 
 load_dotenv()
 
-def get_connection():
-    return pymysql.connect(
-        host = os.getenv('DB_HOST'),
-        user = os.getenv('DB_USER'),
-        password = os.getenv('DB_PASSWORD'),
-        database=os.getenv('DB_TEST_NAME')
-    )
 
-def call_procedure():
-    with get_connection() as conn:
-        with conn.cursor() as cur:
-            cur.callproc('AddCodeWithTransaction', ['ADDR','서울','서울특별시',0,'Y'])   
+conn = pymysql.connect(
+    host = os.getenv('DB_HOST'),
+    user = os.getenv('DB_USER'),
+    password = os.getenv('DB_PASSWORD'),
+    database=os.getenv('DB_TEST_NAME')
+)
 
-call_procedure()
+with conn.cursor() as cursor:
+    cursor.callproc('AddCodeWithTransaction',['ADDR','서울','서울특별시',0,'Y'])
+    for row in cursor.fetchall():
+        print(row)
+conn.commit()
+conn.close()  
