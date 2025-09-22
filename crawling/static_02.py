@@ -29,7 +29,7 @@ for row in store_rows:
             row.select('td')[1].text.strip(),
             row.select('td')[2].text.strip(),
             row.select('td')[3].text.strip(),
-            row.select('td')[4].text.strip()
+            row.select('td')[5].text.strip()
         )
     )
 print(store_lists)

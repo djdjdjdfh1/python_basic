@@ -28,7 +28,7 @@ def get_data(page_num = 1):
                 row.select('td')[1].text.strip(),
                 row.select('td')[2].text.strip(),
                 row.select('td')[3].text.strip(),
-                row.select('td')[4].text.strip()
+                row.select('td')[5].text.strip()
             )
         )
     return store_lists
