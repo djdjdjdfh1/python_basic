@@ -16,24 +16,20 @@ from bs4 import BeautifulSoup
 soup = BeautifulSoup(response.text, 'html.parser')
 
 # 원하는 정보를 추출
-# print(soup)
-#contents > div.content > fieldset > fieldset > div.tableType01 > table > tbody > tr
 str_table_rows = '#contents > div.content > fieldset > fieldset > div.tableType01 > table > tbody > tr'
 # soup.select('tbody > tr') tbody가 한개 밖에 없어서 가능, 만약 여러개면 가장 먼저 만나는 tbdoy
 store_rows = soup.select(str_table_rows)
 # print(store_rows[0])
-test1 = soup.select('td')[0].text.strip() # 모든 td 서칭 1번쨰 td
-test2 = soup.select('td')[1].text.strip() # 모든 td 서칭 2번쨰 td
-test3 = soup.select('td')[2].text.strip() # 모든 td 서칭 3번쨰 td
-test4 = soup.select('td')[3].text.strip() # 모든 td 서칭 4번쨰 td
-# print(test1, test2, test3, test4)
-str_table = '#contents > div.content > fieldset > fieldset > div.tableType01 > table > tbody > tr'
-str_table_obj = soup.select(str_table) # 모든 td 서칭 1번쨰 td
-for idx, row in enumerate(str_table_obj):
-    print(idx + 1)
-    print(row.select('td')[0].text.strip()) # 지역
-    print(row.select('td')[1].text.strip()) # 매장명
-    print(row.select('td')[2].text.strip()) # 현황
-    print(row.select('td')[3].text.strip()) # 주소
-    print(row.select('td')[4].text.strip()) # 전화번호
-    print('*' * 100)
+store_rows = soup.select(str_table_rows)
+store_lists = [] 
+for row in store_rows:
+    store_lists.append(
+        (
+            row.select('td')[0].text.strip(),
+            row.select('td')[1].text.strip(),
+            row.select('td')[2].text.strip(),
+            row.select('td')[3].text.strip(),
+            row.select('td')[4].text.strip()
+        )
+    )
+print(store_lists)
