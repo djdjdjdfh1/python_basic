@@ -19,7 +19,7 @@ driver.get(url)
 driver.maximize_window() # 전체 화면으로 실행 option
 print('사이트 접속했습니다.')
 # 사이트가 로드될때까지 기다린다.
-time.sleep(1)
+time.sleep(1)   
 
 # 더보기 //*[@id="autodanawa_gridC"]/div[3]/article/main/div/div[3]/div[1]/a 
 more = driver.find_element(By.XPATH, '//*[@id="autodanawa_gridC"]/div[3]/article/main/div/div[3]/div[1]/a')
@@ -48,8 +48,20 @@ driver.execute_script("arguments[0].click()", btn) # 사용자 마우스 클릭 
 # driver.execute_script("selectRecord('pereiod);") # 직접 실행
 time.sleep(3)
 
-soup = BeautifulSoup(driver.page_source, 'html.parser') # --> 셀리니움 문법을 이용해서 원하는 태그의 속한 텍스트를 추출
-
-
+# 셀리니움 문법을 이용해서 원하는 태그의 속한 텍스트를 추출
+soup = BeautifulSoup(driver.page_source, 'html.parser')
+tr_lists = soup.select('#autodanawa_gridC > div.gridMain > article > main > div > table > tbody > tr')
+for tr in tr_lists:
+    try:
+        td_lists = tr.select('td')
+        print(td_lists[3].select_one('td.title a').text.strip(), end='\t')
+        print(td_lists[4].text.strip(), end='\t')
+        print(td_lists[5].text.strip())
+        
+    except Exception as e:
+        print(f'e: {e}')
+# store_rows = soup.select(str_table_rows)
+# test = store_rows[0].select('td')[4].text.strip()
+# print('test', test)
 time.sleep(10)
 driver.quit()
