@@ -4,3 +4,6 @@
 # 파이썬
 *.db
 *.__pycache__
+*.zip
+*.txt
+/machine-learning/aclImdb
